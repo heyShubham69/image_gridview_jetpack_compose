@@ -1,4 +1,4 @@
-package com.example.imagegridviewdemo
+package com.example.imagegridviewdemo.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

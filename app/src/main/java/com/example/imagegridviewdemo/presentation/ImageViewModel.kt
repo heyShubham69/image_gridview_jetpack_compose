@@ -1,25 +1,20 @@
 package com.example.imagegridviewdemo.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.example.imagegridviewdemo.domain.repository.ImageRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class ImageViewModel(private val repository: ImageRepository):ViewModel() {
-    private val _loading = MutableStateFlow(true)
-    val loading: StateFlow<Boolean> get() = _loading.asStateFlow()
 
     val imageData = liveData(Dispatchers.IO) {
         try {
             val data =repository.getImageData()
             emit(data)
         } catch (e: Exception) {
-           _loading.update { false }
+           Log.e("ImageViewModel", "Error fetching image data: ${e.message}")
         }
     }
 }
