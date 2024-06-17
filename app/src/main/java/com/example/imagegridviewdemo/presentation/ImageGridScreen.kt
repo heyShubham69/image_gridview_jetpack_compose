@@ -57,6 +57,7 @@ fun ImageGridScreen(viewModel: ImageViewModel) {
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 isInternetAvailable = true
+                viewModel.fetchImages()
             }
 
             override fun onLost(network: Network) {
@@ -86,14 +87,12 @@ fun ImageGridScreen(viewModel: ImageViewModel) {
         ) {
             Text(text = "Internet Status: ${if (isInternetAvailable) "Available" else "Not Available"}")
         }
-        if (isInternetAvailable || imageDataList != null) {
             LazyVerticalGrid(
                 columns = GridCells
                     .Fixed(3),
                 verticalArrangement = Arrangement.spacedBy(6.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 contentPadding = PaddingValues(4.dp),
-                //        modifier = Modifier.background(Color.LightGray)
             ) {
                 imageDataList?.let {
                     items(it) { rowItems ->
@@ -101,10 +100,7 @@ fun ImageGridScreen(viewModel: ImageViewModel) {
                     }
                 }
             }
-        }else{
-            Text(text = "Data Not Available")
 
-        }
        }
 }
 
